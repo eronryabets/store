@@ -1,5 +1,6 @@
 .idea/
 venv/
+media/
 *.pyc
 *.pyo
 *.pyd
