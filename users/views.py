@@ -1,12 +1,11 @@
 from django.urls import reverse_lazy
-from django.utils.decorators import method_decorator
 from django.views.generic.edit import CreateView, UpdateView
 from django.contrib.auth.views import LoginView
 
-from users.decorators.access_decorators import user_profile_access_required
 from users.forms import UserLoginForm, UserRegisterForm, UserProfileForm
 from products.models import Basket
 from users.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 
 class UserLoginView(LoginView):
@@ -26,11 +25,14 @@ class UserRegistrationView(CreateView):
         return context
 
 
-@method_decorator(user_profile_access_required, name='dispatch')
-class UserProfileView(UpdateView):
+class UserProfileView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = User
     form_class = UserProfileForm
     template_name = 'users/profile.html'
+
+    def test_func(self):
+        # Проверить, имеет ли текущий пользователь доступ к профилю
+        return self.request.user.id == self.kwargs.get("pk")
 
     def get_success_url(self):
         return reverse_lazy('users:profile', args=(self.object.id,))
