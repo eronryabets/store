@@ -41,9 +41,6 @@ class UserProfileView(UpdateView):
         return context
 
 
-def logout(request):
-    auth.logout(request)
-    return HttpResponseRedirect(reverse('index'))
 
 # def registration(request):
 #     if request.method == 'POST':
