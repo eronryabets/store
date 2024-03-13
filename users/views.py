@@ -1,9 +1,9 @@
-from django.http import HttpResponseRedirect
-from django.urls import reverse, reverse_lazy
+from django.urls import reverse_lazy
+from django.utils.decorators import method_decorator
 from django.views.generic.edit import CreateView, UpdateView
-from django.contrib import auth
 from django.contrib.auth.views import LoginView
 
+from users.decorators.access_decorators import user_profile_access_required
 from users.forms import UserLoginForm, UserRegisterForm, UserProfileForm
 from products.models import Basket
 from users.models import User
@@ -26,6 +26,7 @@ class UserRegistrationView(CreateView):
         return context
 
 
+@method_decorator(user_profile_access_required, name='dispatch')
 class UserProfileView(UpdateView):
     model = User
     form_class = UserProfileForm
@@ -39,8 +40,6 @@ class UserProfileView(UpdateView):
         context['title'] = 'Store - Profile'
         context['baskets'] = Basket.objects.filter(user=self.object)
         return context
-
-
 
 # def registration(request):
 #     if request.method == 'POST':
