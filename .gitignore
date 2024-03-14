@@ -1,6 +1,9 @@
 .idea/
 venv/
 media/
+secret/
+*.env
+*.secret
 *.pyc
 *.pyo
 *.pyd
