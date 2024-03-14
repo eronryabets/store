@@ -1,8 +1,8 @@
+from django.conf import settings
+from django.contrib.auth.models import AbstractUser
 from django.core.mail import send_mail
 from django.db import models
-from django.contrib.auth.models import AbstractUser
 from django.urls import reverse
-from django.conf import settings
 from django.utils.timezone import now
 
 
@@ -27,7 +27,7 @@ class EmailVerification(models.Model):
         subject = f"User account confirmation for {self.user.username}"
         message = "To confirm your account for {}, follow the link: {}".format(
             self.user.email,
-            verification_link
+            verification_link,
         )
         send_mail(
             subject,
