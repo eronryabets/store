@@ -1,6 +1,9 @@
 from django.core.mail import send_mail
 from django.db import models
 from django.contrib.auth.models import AbstractUser
+from django.urls import reverse
+from django.conf import settings
+from django.utils.timezone import now
 
 
 class User(AbstractUser):
@@ -18,10 +21,21 @@ class EmailVerification(models.Model):
         return f"EmailVerification object for {self.user.email}"
 
     def send_verification_email(self):
+        link = reverse('users:email_verification',
+                       kwargs={'email': self.user.email, 'code': self.code})
+        verification_link = f"{settings.DOMAIN_NAME}{link}"
+        subject = f"User account confirmation for {self.user.username}"
+        message = "To confirm your account for {}, follow the link: {}".format(
+            self.user.email,
+            verification_link
+        )
         send_mail(
-            "Test verification email",
-            "Here is the message.",
-            "from@example.com",
-            [self.user.email],
+            subject,
+            message,
+            from_email="from@example.com",
+            recipient_list=[self.user.email],
             fail_silently=False,
         )
+
+    def is_expired(self):
+        return True if now() >= self.expiration else False
