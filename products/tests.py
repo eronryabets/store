@@ -1,4 +1,5 @@
 from http import HTTPStatus
+
 from django.test import TestCase
 from django.urls import reverse
 
@@ -37,7 +38,7 @@ class ProductListViewTestCase(TestCase):
         self._common_test(response)
         self.assertEqual(
             list(response.context_data.get('object_list')),
-            list(self.products.filter(category_id=category.id)[:3])
+            list(self.products.filter(category_id=category.id)[:3]),
         )
 
     def _common_test(self, response):

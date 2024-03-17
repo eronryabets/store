@@ -1,7 +1,8 @@
-import os
 import json
-import chardet
+import os
 from pathlib import Path
+
+import chardet
 
 
 # Getting the file encoding

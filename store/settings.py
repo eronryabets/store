@@ -97,7 +97,7 @@ DATABASES = {
         "PASSWORD": os.getenv('DATABASES_PASSWORD'),
         "HOST": "localhost",
         "PORT": "5433",
-    }
+    },
 }
 
 # Password validation
@@ -206,5 +206,5 @@ SOCIALACCOUNT_PROVIDERS = {
         'SCOPE': [
             'user',
         ],
-    }
+    },
 }
