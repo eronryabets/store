@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import HttpResponseRedirect
 from django.views.generic.base import TemplateView
 from django.views.generic.list import ListView
+from django.db.models import Q
 
 from common.views import TitleMixin
 from products.models import Basket, Product, ProductCategory
@@ -26,6 +27,27 @@ class ProductListView(TitleMixin, ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(ProductListView, self).get_context_data()
         context['categories'] = ProductCategory.objects.all()
+        return context
+
+
+class ProductSearchView(TitleMixin, ListView):
+    model = Product
+    template_name = 'products/search.html'
+    title = 'Store - search'
+    paginate_by = 3
+
+    def get_queryset(self):
+        queryset = super(ProductSearchView, self).get_queryset()
+        search_query = self.request.GET.get('q')
+        if search_query:
+            queryset = queryset.filter(Q(name__icontains=search_query) or
+                                       Q(description__icontains=search_query))
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        search_query = self.request.GET.get('q', '')
+        context['search_query'] = search_query
         return context
 
 

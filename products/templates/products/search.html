@@ -1,0 +1,87 @@
+{% extends 'products/base.html' %}
+{% load static %}
+
+{% block css %}
+    <div class="container">
+
+        <form method="GET" action="{% url 'products:product_search' %}">
+            <input type="text" name="q" placeholder="Search..."
+                   value="{{ request.GET.q|default_if_none:'' }}">
+            <button type="submit">Search</button>
+        </form>
+
+        <div/>
+
+        <div class="container">
+            <div class="row">
+                <div class="row">
+                    {% for product in object_list %}
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="card h-100">
+                                <a href="#">
+                                    <img class="card-img-top"
+                                         src="{{ product.image.url }}"
+                                         alt="">
+                                </a>
+                                <div class="card-body">
+                                    <h4 class="card-title">
+                                        <a href="#">{{ product.name }}</a>
+                                    </h4>
+                                    <h5>{{ product.price }}</h5>
+                                    <p class="card-text">{{ product.description }}</p>
+                                </div>
+                                <div class="card-footer text-center">
+                                    <a class="btn btn-outline-success"
+                                       href="{% url 'products:basket_add' product.id %}">
+                                        Send to Basket
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                </div>
+
+
+            </div>
+
+        </div>
+        {% if is_paginated %}
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item {% if not page_obj.has_previous %} disabled {% endif %}">
+                        <a class="page-link"
+                           href="{% if page_obj.has_previous %}
+                           {% url 'products:product_search' %}?q={{ search_query }}&page={{ page_obj.previous_page_number }}
+                           {% endif %}">
+                            Previous
+                        </a>
+                    </li>
+                    {% for page in paginator.page_range %}
+                        <li class="page-item {% if page_obj.number == page %} active {% endif %}">
+                            <a class="page-link"
+                               href="{% url 'products:product_search' %}?q={{ search_query }}&page={{ page }}">{{ page }}</a>
+                        </li>
+                    {% endfor %}
+                    <li class="page-item {% if not page_obj.has_next %} disabled {% endif %}">
+                        <a class="page-link"
+                           href="{% if page_obj.has_next %}
+                           {% url 'products:product_search' %}?q={{ search_query }}&page={{ page_obj.next_page_number }}
+                           {% endif %}">
+                            Next
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        {% endif %}
+    </div>
+{% endblock %}
+
+{% block content %}
+    <link href="{% static 'vendor/css/index.css' %}" rel="stylesheet">
+{% endblock %}
+
+{#            <div class="col-lg-6">#}
+{#                <h1 class="mt-5">Store Search</h1>#}
+{#                <p>Search goods.</p>#}
+{#            </div>#}
