@@ -213,3 +213,8 @@ SOCIALACCOUNT_PROVIDERS = {
         ],
     },
 }
+
+# Celery
+
+CELERY_BROKER_URL = "redis://localhost:6378"
+CELERY_RESULT_BACKEND = "redis://localhost:6378"
