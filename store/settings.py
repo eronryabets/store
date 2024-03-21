@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'debug_toolbar',
 
     'products',
+    'orders',
     'users',
 ]
 
@@ -99,7 +100,7 @@ CACHES = {
     "default": {
         "BACKEND": "django.core.cache.backends.redis.RedisCache",
         "LOCATION": "redis://localhost:6378",
-    }
+    },
 }
 
 # Database
