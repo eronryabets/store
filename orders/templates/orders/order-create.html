@@ -23,12 +23,12 @@
                                     <h6 class="my-0">{{ basket.product.name }}</h6>
                                     <small class="text-muted">{{ basket.quantity }} pcs.</small>
                                 </div>
-                                <span class="text-muted">{{ basket.sum| intcomma }} hrn.</span>
+                                <span class="text-muted">{{ basket.sum| intcomma }} uah.</span>
                             </li>
                         {% endfor %}
                         <li class="list-group-item d-flex justify-content-between">
                             <span>Total</span>
-                            <strong>{{ baskets.total_sum| intcomma}} hrn.</strong>
+                            <strong>{{ baskets.total_sum| intcomma}} uah.</strong>
                         </li>
                     </ul>
                 </div>

@@ -19,7 +19,7 @@
                                    value="{{ basket.quantity }}" min="0">
                         </label>
                     </div>
-                    <div class="col-lg-4">{{ basket.sum| intcomma }} hrn.</div>
+                    <div class="col-lg-4">{{ basket.sum| intcomma }} uah.</div>
                     <div class="col-lg-4">
                         <a href="{% url 'products:basket_remove' basket.id %}">
                             <i class="fas fa-trash"></i>
@@ -34,7 +34,7 @@
     <div class="card mb-3">
         <div class="card-footer">
             <p class="float-left">Total cost</p>
-            <h4 class="float-right">{{ baskets.total_sum| intcomma }} hrn.</h4>
+            <h4 class="float-right">{{ baskets.total_sum| intcomma }} uah.</h4>
         </div>
     </div>
     <a class="btn btn-success btn-lg float-right" href="{% url 'orders:order_create' %}">
