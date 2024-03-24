@@ -8,6 +8,7 @@ from django.views.generic import CreateView, TemplateView
 
 from common.views import TitleMixin
 from orders.forms import OrderForm
+from products.models import Basket
 from store import settings
 
 stripe.api_key = settings.STRIPE_SECRET_KEY
@@ -30,17 +31,11 @@ class OrderCreateView(TitleMixin, CreateView):
 
     def post(self, request, *args, **kwargs):
         super(OrderCreateView, self).post(request, *args, **kwargs)
+        baskets = Basket.objects.filter(user=self.request.user)
         checkout_session = stripe.checkout.Session.create(
-            line_items=[
-                {
-                    # 'price': '{{PRICE_ID}}',
-                    'price': 'price_1Ox9EGP87GK9uvhuTk2d3ZXm',
-                    'quantity': 1,
-                },
-            ],
-
-            mode='payment',
+            line_items=baskets.stripe_products(),
             metadata={'order_id': self.object.id},
+            mode='payment',
             success_url='{}{}'.format(settings.DOMAIN_NAME, reverse('orders:order_success')),
             cancel_url='{}{}'.format(settings.DOMAIN_NAME, reverse('orders:order_canceled')),
         )
