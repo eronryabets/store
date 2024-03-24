@@ -8,6 +8,7 @@ from django.views.generic import CreateView, TemplateView
 
 from common.views import TitleMixin
 from orders.forms import OrderForm
+from orders.models import Order
 from products.models import Basket
 from store import settings
 
@@ -79,7 +80,6 @@ def stripe_webhook_view(request):
 
 
 def fulfill_order(session):
-    print(session)
-    line_items = session.line_items
-    # TODO: fill me in
-    print("Fulfilling order")
+    order_id = int(session.metadata.get('order_id'))
+    order = Order.objects.get(id=order_id)
+    order.update_after_payment()
