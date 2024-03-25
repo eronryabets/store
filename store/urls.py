@@ -19,8 +19,8 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-from products.views import IndexView
 from orders.views import stripe_webhook_view
+from products.views import IndexView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -30,8 +30,6 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('orders/', include('orders.urls', namespace='orders')),
     path('webhook/stripe/', stripe_webhook_view, name='stripe-webhook'),
-    #stripe listen --forward-to 127.0.0.1:8000/webhook/stripe/
-
 ]
 
 if settings.DEBUG:

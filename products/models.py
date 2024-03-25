@@ -1,7 +1,6 @@
 import stripe
-
-from django.db import models
 from django.conf import settings
+from django.db import models
 
 from users.models import User
 
@@ -47,7 +46,7 @@ class Product(models.Model):
         stripe_product_price = stripe.Price.create(
             product=stripe_product['id'],
             unit_amount=round(self.price * 100),
-            currency='uah'
+            currency='uah',
         )
         return stripe_product_price
 
@@ -92,4 +91,3 @@ class Basket(models.Model):
             'sum': float(self.sum()),
         }
         return basket_item
-
