@@ -126,7 +126,10 @@ INTERNAL_IPS = [
 # Redis
 
 REDIS_HOST = env('REDIS_HOST')
-REDIS_PORT = env('REDIS_PORT')
+if DEBUG:
+    REDIS_PORT = env('REDIS_PORT_LOCAL')
+else:
+    REDIS_PORT = env('REDIS_PORT')
 
 CACHES = {
     "default": {
