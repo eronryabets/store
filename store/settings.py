@@ -20,13 +20,18 @@ env = environ.Env(
     DOMAIN_NAME=str,
 
     REDIS_HOST=str,
-    REDIS_PORT=str,
+    REDIS_PORT=int,
+    REDIS_PORT_LOCAL=int,
 
     DATABASE_NAME=str,
     DATABASES_USER=str,
     DATABASES_PASSWORD=str,
     DATABASE_HOST=str,
-    DATABASE_PORT=str,
+    DATABASE_PORT=int,
+    DATABASE_NAME_LOCAL=str,
+    DATABASES_USER_LOCAL=str,
+    DATABASES_PASSWORD_LOCAL=str,
+    DATABASE_PORT_LOCAL=int,
 
     EMAIL_HOST=str,
     EMAIL_HOST_USER=str,
@@ -126,10 +131,7 @@ INTERNAL_IPS = [
 # Redis
 
 REDIS_HOST = env('REDIS_HOST')
-if DEBUG:
-    REDIS_PORT = env('REDIS_PORT_LOCAL')
-else:
-    REDIS_PORT = env('REDIS_PORT')
+REDIS_PORT = env('REDIS_PORT_LOCAL' if DEBUG else 'REDIS_PORT')
 
 CACHES = {
     "default": {
@@ -144,11 +146,11 @@ CACHES = {
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": env('DATABASE_NAME'),
-        "USER": env('DATABASES_USER'),
-        "PASSWORD": env('DATABASES_PASSWORD'),
+        "NAME": env('DATABASE_NAME_LOCAL' if DEBUG else 'DATABASE_NAME'),
+        "USER": env('DATABASES_USER_LOCAL' if DEBUG else 'DATABASES_USER'),
+        "PASSWORD": env('DATABASES_PASSWORD_LOCAL' if DEBUG else 'DATABASES_PASSWORD'),
         "HOST": env('DATABASE_HOST'),
-        "PORT": env('DATABASE_PORT'),
+        "PORT": env('DATABASE_PORT_LOCAL' if DEBUG else 'DATABASE_PORT'),
     },
 }
 
@@ -224,16 +226,17 @@ LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
     'handlers': {
-        'console': {
+        'file': {
             'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
+            'class': 'logging.FileHandler',
+            'filename': os.path.join(BASE_DIR, 'logs', 'django.log'),
         },
     },
     'loggers': {
-        'django.request': {
-            'handlers': ['console'],
+        'django': {
+            'handlers': ['file'],
             'level': 'DEBUG',
-            'propagate': False,
+            'propagate': True,
         },
     },
 }

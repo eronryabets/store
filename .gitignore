@@ -2,6 +2,7 @@
 venv/
 media/
 secret/
+logs/
 *.env
 *.secret
 *.pyc
