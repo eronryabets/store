@@ -18,6 +18,7 @@ env = environ.Env(
     DEBUG=bool,
     SECRET_KEY=str,
     DOMAIN_NAME=str,
+    DOMAIN_NAME_LOCAL=str,
 
     REDIS_HOST=str,
     REDIS_PORT=int,
@@ -42,6 +43,7 @@ env = environ.Env(
     STRIPE_PUBLIC_KEY=str,
     STRIPE_SECRET_KEY=str,
     STRIPE_WEBHOOK_SECRET=str,
+    STRIPE_WEBHOOK_SECRET_LOCAL=str,
 )
 
 # from dotenv import read_dotenv
@@ -63,7 +65,7 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['*']
 
-DOMAIN_NAME = env('DOMAIN_NAME')
+DOMAIN_NAME = env('DOMAIN_NAME_LOCAL' if DEBUG else 'DOMAIN_NAME')
 
 # Application definition
 
@@ -227,7 +229,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     'handlers': {
         'file': {
-            'level': 'DEBUG',
+            'level': 'ERROR',
             'class': 'logging.FileHandler',
             'filename': os.path.join(BASE_DIR, 'logs', 'django.log'),
         },
@@ -235,7 +237,7 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['file'],
-            'level': 'DEBUG',
+            'level': 'ERROR',
             'propagate': True,
         },
     },
@@ -267,4 +269,4 @@ CELERY_RESULT_BACKEND = f"redis://{REDIS_HOST}:{REDIS_PORT}"
 
 STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY')
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
-STRIPE_WEBHOOK_SECRET = env('STRIPE_WEBHOOK_SECRET')
+STRIPE_WEBHOOK_SECRET = env('STRIPE_WEBHOOK_SECRET_LOCAL' if DEBUG else 'STRIPE_WEBHOOK_SECRET')

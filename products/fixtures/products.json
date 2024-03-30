@@ -4,10 +4,11 @@
         "pk": 1,
         "fields": {
             "name": "Black hoodie with adidas Originals monograms",
-            "description": "",
+            "description": "Smooth fabric.",
             "price": "6090.00",
             "quantity": 10,
             "image": "products_images/Adidas-hoodie.png",
+            "stripe_product_price_id": "price_1OxWXiP87GK9uvhuHRhfAuHE",
             "category": 1
         }
     },
@@ -17,9 +18,10 @@
         "fields": {
             "name": "Blue jacket by The North Face",
             "description": "Smooth fabric. Waterproof coating. Lightweight and warm down filling.",
-            "price": "237200.00",
+            "price": "23720.00",
             "quantity": 5,
             "image": "products_images/Blue-jacket-The-North-Face.png",
+            "stripe_product_price_id": "price_1OxWShP87GK9uvhubxNeX6rg",
             "category": 1
         }
     },
@@ -32,6 +34,7 @@
             "price": "3390.00",
             "quantity": 13,
             "image": "products_images/Brown-sports-oversized-top-ASOS-DESIGN.png",
+            "stripe_product_price_id": "price_1OxWXgP87GK9uvhuDuADBZct",
             "category": 1
         }
     },
@@ -44,6 +47,7 @@
             "price": "2340.00",
             "quantity": 22,
             "image": "products_images/Black-Nike-Heritage-backpack.png",
+            "stripe_product_price_id": "price_1OxWU6P87GK9uvhuPSXijGrq",
             "category": 4
         }
     },
@@ -56,6 +60,7 @@
             "price": "13590.00",
             "quantity": 5,
             "image": "products_images/Black-Dr-Martens-shoes.png",
+            "stripe_product_price_id": "price_1OxWXhP87GK9uvhuOW1BqgIM",
             "category": 2
         }
     },
@@ -68,6 +73,20 @@
             "price": "2890.00",
             "quantity": 13,
             "image": "products_images/Dark-blue-wide-leg-ASOs-DESIGN-trousers.png",
+            "stripe_product_price_id": "price_1OxWXiP87GK9uvhujVMsBuzB",
+            "category": 1
+        }
+    },
+    {
+        "model": "products.product",
+        "pk": 7,
+        "fields": {
+            "name": "Black Urban Hip Hop Japanese Sweatshirt",
+            "description": "XYXIONGMAO Streetwear Techwear Hoodie Cyberpunk Tactical Mens Black Urban Hip Hop Japanese Sweatshirt",
+            "price": "8000.00",
+            "quantity": 7,
+            "image": "products_images/Black-urban.jpg",
+            "stripe_product_price_id": "price_1OxWXjP87GK9uvhunsIJBBtX",
             "category": 1
         }
     }
